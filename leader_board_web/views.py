@@ -5,7 +5,6 @@
 
 
 from django.shortcuts import render, redirect
-from django.views.decorators.csrf import csrf_exempt
 
 from leader_board_web.models import PlayerPoint
 from leader_board_web.forms import PlayerPointForm
@@ -18,7 +17,7 @@ def check_args(args):
     client_number = args.get("client_number")
     rank_start = args.get("rank_start")
     rank_end = args.get("rank_end")
-    if not(client_number, rank_start, rank_end):
+    if not (client_number and rank_start and rank_end):
         return False
     try:
         rank_start = int(rank_start)
@@ -27,17 +26,13 @@ def check_args(args):
         return False
     return True
 
-@csrf_exempt
 def push_point(request):
     """
     玩家终端上传分数, 可重复提交
     """
-    if request.method != "POST" and request.method != "GET":
+    if request.method != "GET":
         return ajax_error("请求方法不支持")
-    if request.method == "POST":
-        data = request.POST
-    if request.method == "GET":
-        data = request.GET
+    data = request.GET
     client_number = data.get("client_number")
     point = data.get("point")
     form_data = {"client_number": client_number, "point": point}
@@ -57,12 +52,9 @@ def get_player_rank(request):
     """
     某个终端玩家查询排名区间的玩家信息
     """
-    if request.method != "POST" and request.method != "GET":
+    if request.method != "GET":
         return ajax_error("请求方法不支持")
-    if request.method == "POST":
-        args = request.POST
-    if request.method == "GET":
-        args = request.GET
+    args = request.GET
     check_res = check_args(args)
     if not check_res:
         return ajax_error("请检查参数是否正确")
