@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, "playWeb/templates").replace("\\", "/"),
+    os.path.join(BASE_DIR, "leader_board_web/templates").replace("\\", "/"),
 )
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -35,7 +35,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'playWeb',
+    'leader_board_web',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -56,9 +56,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
 )
 
-ROOT_URLCONF = 'playWeb.urls'
+ROOT_URLCONF = 'leader_board_web.urls'
 
-WSGI_APPLICATION = 'playSystem.wsgi.application'
+WSGI_APPLICATION = 'leader_board_system.wsgi.application'
 
 
 # Database
@@ -67,7 +67,8 @@ WSGI_APPLICATION = 'playSystem.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': "play",
+        'NAME': "leader_board",
+        "USER": "root"
     }
 }
 
